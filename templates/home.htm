@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <title> FLASK POSTGRES APP </title>
+        <style>
+            h2 {text-align: center; font-size: large; font-weight: bold; color: rgb(255, 131, 30);}
+            #courses {
+                font-family: 'Courier New', Courier, monospace; 
+                border-collapse: collapse;
+                margin-left:auto; 
+                margin-right:auto;
+                width: 50%;}
+            #courses td, #courses th {
+                border: 2px solid plum;
+                padding: 8px;
+                text-align: center;
+                font-size: 14px;
+                font-weight: bold;
+            }
+            #courses th{
+                font-size: medium;
+                color: rgb(80, 0, 241);
+            }
+        </style>
+        </head>
+        <body>
+            <h2> Krishna Coaching Institute </h2>
+            <table id="courses" align="center">
+                <thead>
+                    <tr>
+                        <th> ID </th>
+                        <th> Course Name </th>
+                        <th> Fees </th>
+                        <th> Duration (in hr) </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Creating a form -->
+            <h2>Add a new course</h2>
+            <form method="POST" style="text-align:center;" action="/create">
+            <input type="text" name="name" placeholder="Name">
+            <input type="text" name="fees" placeholder="Fees">
+            <input type="text" name="duration" placeholder="Duration">
+            <input type="submit" value="create">
+        </form>
+
+        <h2> Update or Delete a course </h2>
+        <table align="center" >
+            <thead style="display: block; text-align: center;">
+                <tr>
+                    <th > ID </th>
+                    <th width="35%"> Course Name </th>
+                    <th width="35%"> Fees </th>
+                    <th width="35%"> Duration (in hr) </th>
+                    <th width="15%"> Action </th>
+                </tr>
+                </thead>
+                {% for row in data %}
+                <tr>
+                    <td> 
+                        <form action="/update" method="post">
+                            <label> {{ row[0] }}</label>
+                            <input type="hidden" name="id" value="{{ row[0] }}">
+                            <input type="text" name="name" value="{{ row[1] }}">
+                            <input type="text" name="fees" value="{{ row[2] }}">
+                            <input type="text" name="duration" value="{{ row[3] }}">
+                            <input type="submit" value="Update">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+        </table>
+        </body>
+</html>
